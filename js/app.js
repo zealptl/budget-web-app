@@ -86,7 +86,11 @@ var UIController = (function() {
     inputValue: ".add__value",
     inputBtn: ".add__btn",
     incomeContainer: ".income__list",
-    expensesContainer: ".expenses__list"
+    expensesContainer: ".expenses__list",
+    budgetLable: ".budget__value",
+    incomeLable: ".budget__income--value",
+    expensesLable: ".budget__expenses--value",
+    percentageLable: ".budget__expenses--percentage"
   };
   return {
     getInput: function() {
@@ -133,6 +137,27 @@ var UIController = (function() {
       fieldsArray[0].focus();
     },
 
+    displayBudget: function(obj) {
+      if (obj.budget > 0) {
+        document.querySelector(DOMstrings.budgetLable).textContent =
+          "+" + obj.budget;
+      } else {
+        document.querySelector(DOMstrings.budgetLable).textContent = obj.budget;
+      }
+
+      document.querySelector(DOMstrings.incomeLable).textContent =
+        "+" + obj.totalInc;
+      document.querySelector(DOMstrings.expensesLable).textContent =
+        "-" + obj.totalExp;
+
+      if (obj.percentage > 0) {
+        document.querySelector(DOMstrings.percentageLable).textContent =
+          obj.percentage + "%";
+      } else {
+        document.querySelector(DOMstrings.percentageLable).textContent = "---";
+      }
+    },
+
     getDOMstrings: function() {
       return DOMstrings;
     }
@@ -159,7 +184,7 @@ var controller = (function(budgetCtrl, UICtrl) {
     //2. Return the budget
     var budget = budgetCtrl.getBudget();
     //3. Display the budget on the UI
-    console.log(budget);
+    UICtrl.displayBudget(budget);
   };
 
   var ctrlAddItem = function() {
@@ -184,6 +209,12 @@ var controller = (function(budgetCtrl, UICtrl) {
   return {
     init: function() {
       setupEventListener();
+      UICtrl.displayBudget({
+        budget: 0,
+        totalInc: 0,
+        totalExp: 0,
+        percentage: -1
+      });
     }
   };
 })(budgetController, UIController);
