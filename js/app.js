@@ -240,6 +240,32 @@ var UIController = (function() {
           curr.textContent = "---";
         }
       });
+    },
+
+    displayMonth: function() {
+      var now, year, month, months;
+      months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "November",
+        "December"
+      ];
+      now = new Date();
+      year = now.getFullYear();
+      month = now.getMonth();
+      document.querySelector(DOMstrings.dateLable).textContent =
+        months[month] + " " + year;
+    },
+
+    getDOMstrings: function() {
+      return DOMstrings;
     }
   };
 })();
